@@ -45,84 +45,18 @@ This platform allows **students** to learn, take courses, complete quizzes, and 
 
 ---
 
-## 📁 Folder Structure
-
-```
-lms-platform/
-│
-├── client/                    # React Frontend
-│   ├── public/
-│   ├── src/
-│   │   ├── pages/
-│   │   │   ├── student/      → Student dashboard, courses, assignments
-│   │   │   ├── educator/     → Educator dashboard, course builder
-│   │   │   ├── Home.jsx
-│   │   │   └── Login.jsx
-│   │   ├── components/       → Navbar, Sidebar, Cards, etc.
-│   │   ├── hooks/            → Custom React hooks
-│   │   ├── utils/            → Helper functions (progress calc, date format)
-│   │   └── App.js
-│   ├── package.json
-│   └── ...
-│
-├── server/                    # Express Backend
-│   ├── config/               → DB & environment setup
-│   ├── controllers/          → Logic for routes (auth, courses, submissions)
-│   ├── middleware/           → Auth, role-based access
-│   ├── models/               → Mongoose models (User, Course, Lesson, etc.)
-│   ├── routes/               → API endpoints (auth, courses, payments)
-│   └── server.js             → Entry point
-│
-├── README.md
-├── package.json
-└── .gitignore
-```
-
----
-
-## ⚙️ Installation & Setup Guide
-
-### 🔧 Prerequisites
-Make sure you have installed:
-- Node.js (v18+)
-- MongoDB (local or Atlas)
-- Git
-
-### 1️⃣ Clone the repository
-```bash
-git clone https://github.com/<your-username>/lms-platform.git
+ ⚙️ Installation & Setup Guide
+ 
+# Clone repo
+git clone <repo-url>
 cd lms-platform
-```
 
-### 2️⃣ Setup Backend
-```bash
-cd server
+# Install backend dependencies
+cd backend
 npm install
-```
+npm run dev  # or node server.js
 
-Create a `.env` file in the server folder:
-```env
-PORT=5000
-MONGO_URI=mongodb+srv://<your-db-url>
-JWT_SECRET=your_jwt_secret
-CLOUDINARY_NAME=your_cloud_name
-CLOUDINARY_API_KEY=your_api_key
-CLOUDINARY_API_SECRET=your_api_secret
-STRIPE_SECRET=your_stripe_key
-```
-
-Start the server:
-```bash
-npm run dev
-```
-Server runs on 👉 http://localhost:5000
-
-### 3️⃣ Setup Frontend
-```bash
-cd ../client
+# Install frontend dependencies
+cd ../frontend
 npm install
 npm start
-```
-Frontend runs on 👉 http://localhost:3000
-
----
