@@ -8,7 +8,7 @@ const AppContextProvider = ({children}) => {
   const currency = import.meta.env.VITE_CURRENCY;
   const navigate = useNavigate();
   const [allCourses , setAllCourse] = useState([]);
-
+const [isEducator , setisEducator] = useState(true);
 
 
   // Fetch All Courses
@@ -37,7 +37,8 @@ useEffect(()=>{
 currency,
 allCourses,
 navigate,
-calculateRating
+calculateRating,
+isEducator, setisEducator
   }
   return (
     <>
