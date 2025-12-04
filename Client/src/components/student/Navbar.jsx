@@ -53,7 +53,7 @@ const Navbar = () => {
                 </button>
                 <span className="text-slate-500">|</span>
                 <Link
-                  to="/my-enrollments"
+                  to="/my-enrollment"
                   className="px-3 py-2 rounded-md text-slate-200 hover:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-400/60"
                   aria-label="My Enrollments"
                 >
