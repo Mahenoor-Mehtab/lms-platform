@@ -38,7 +38,7 @@ const App = () => {
 
       {/* educator route */}
       <Route path='/educator' element={< Educator/>}>
-<Route index path='educator' element={<Dashboard/>  }/>  {/*  // Index route sirf default tab render hota jab exact parent path /educator ho */}
+<Route index path='/educator' element={<Dashboard/>  }/>  {/*  // Index route sirf default tab render hota jab exact parent path /educator ho */}
   <Route path='add-courses' element={ <AddCourses/> }/>
    <Route path='my-courses' element={<MyCourses/> }/>
     <Route path='student-enrolled' element={ <StudentEnrolled/>  }/>
