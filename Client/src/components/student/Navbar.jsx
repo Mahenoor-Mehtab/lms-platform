@@ -48,6 +48,7 @@ const Navbar = () => {
                 <button
                   className="px-3 py-2 rounded-md text-slate-200 hover:text-white hover:underline hover:underline-offset-4 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-400/40"
                   aria-label="Educator or Become educator"
+                  onClick={()=> navigate('/educator')}
                 >
                   {isEducator ? "Educator Dashboard" : "Become Educator"}
                 </button>
