@@ -39,7 +39,6 @@ const {allCourses , calculateRating , calculateChapterTime , calculateCourseDura
    <>
    
     <div className="min-h-screen w-full py-12 px-6 md:px-12  text-gray-100  ">
-      {/* subtle glass overlay to lift content */}
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 grid-cols-1 gap-8 items-start">
 
         {/* LEFT COLUMN */}

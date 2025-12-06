@@ -25,7 +25,6 @@ const Testimonials = () => {
   return (
     <section className=" px-6 md:px-24">
       <div className="max-w-6xl mx-auto">
-        {/* animated, responsive header */}
         <motion.h2
           initial={{ opacity: 0, y: -10, scale: 0.98 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
