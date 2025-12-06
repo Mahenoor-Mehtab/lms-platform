@@ -27,7 +27,7 @@ const Navbar = () => {
           transition-colors duration-350 shadow-[0_5px_25px_rgba(255,255,255,0.6)]
          `}
       >
-        {/* Logo (clickable) */}
+        {/* Logo */}
         <motion.img
           src={assets.logo}
           alt="Logo"
@@ -64,7 +64,7 @@ const Navbar = () => {
             )}
           </nav>
 
-          {/* CTA / User */}
+       
           <div className="flex items-center gap-4">
             {user ? (
               <div className="rounded-full p-0.5 bg-gradient-to-br from-cyan-400/30 to-blue-500/20">

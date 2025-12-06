@@ -7,7 +7,6 @@ export default function CallToAction() {
   const navigate = useNavigate();
   return (
     <section className="w-full py-20 px-6 md:px-12 lg:px-20 bg-black text-white text-center flex flex-col justify-center items-center">
-      {/* Heading */}
       <motion.h1
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
@@ -16,8 +15,6 @@ export default function CallToAction() {
       >
         Learn Anything,<br /> Anywhere, Anytime
       </motion.h1>
-
-      {/* Sub text */}
       <motion.p
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
@@ -28,14 +25,14 @@ export default function CallToAction() {
         veniam aliqua proident excepteur commodo do ea.
       </motion.p>
 
-      {/* Buttons */}
+  
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
         className="flex gap-4"
       >
-        {/* Get Started */}
+   
         <button
           className="px-6 py-3 rounded-xl font-semibold bg-gradient-to-r from-blue-500 to-purple-500 hover:opacity-90 transition"
           onClick={()=> navigate('/course-list')}
@@ -43,7 +40,7 @@ export default function CallToAction() {
           Get Started
         </button>
 
-        {/* Learn More */}
+   
         <button
           className="px-6 py-3 rounded-xl font-semibold border border-gray-600 hover:border-white transition"
         >

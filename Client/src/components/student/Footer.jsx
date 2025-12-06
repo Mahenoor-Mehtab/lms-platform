@@ -4,7 +4,6 @@ import { motion } from 'framer-motion';
 const Footer = () => {
 return ( <footer className="bg-gray-800 w-full text-gray-300 py-7 relative"> <div className="container mx-auto px-4 md:px-12 flex flex-col md:flex-row justify-between gap-10">
 
-    {/* Logo & Description */}
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -21,8 +20,7 @@ return ( <footer className="bg-gray-800 w-full text-gray-300 py-7 relative"> <di
         Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.
       </p>
     </motion.div>
-
-    {/* Company Links */}
+    
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -38,8 +36,7 @@ return ( <footer className="bg-gray-800 w-full text-gray-300 py-7 relative"> <di
         ))}
       </ul>
     </motion.div>
-
-    {/* Newsletter */}
+    
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
