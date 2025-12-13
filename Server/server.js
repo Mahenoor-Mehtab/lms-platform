@@ -2,7 +2,7 @@ import 'dotenv/config'
 import express from 'express'
 import cors from 'cors'
 import connectDB from './config/mongoDb.js'
-import { clerkWebhooks } from './controllers/webhooks.js'
+import { clerkWebhooks, stripeWebhooks } from './controllers/webhooks.js'
 import educatorRouter from './routes/educatorRoutes.js'
 import { clerkMiddleware } from '@clerk/express'
 import connectCloudinary from './config/cloudinary.js'
@@ -15,6 +15,14 @@ connectDB(); // connection function call karta for connecting with database
 await connectCloudinary() // connect to the cloudinary storage
 
 app.use(cors()) // connect our backend with any other domain
+
+//  STRIPE WEBHOOK — MUST BE FIRST kyu mera data parse na ho paye
+app.post(
+  '/stripe',
+  express.raw({ type: 'application/json' }),
+  stripeWebhooks
+)
+
 app.use(express.json())
 
 app.use(clerkMiddleware({
@@ -30,6 +38,7 @@ app.post('/clerk', clerkWebhooks)
 app.use('/api/educator', educatorRouter)
 app.use('/api/course',courseRouter )
 app.use('/api/user', userRouter)
+
 
 
 const PORT = process.env.PORT || 5000
