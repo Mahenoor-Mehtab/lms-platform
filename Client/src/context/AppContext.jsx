@@ -3,19 +3,60 @@ import { dummyCourses } from '../assets/assets';
 import { useNavigate } from 'react-router-dom';
 import humanizeDuration from 'humanize-duration'
 import {useAuth , useUser} from '@clerk/clerk-react'
+import axios from 'axios'
+import { toast } from 'react-toastify';
 
 export const AppContext = createContext()
 
 export function  AppContextProvider({ children }){
+
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
+  const {getToken} = useAuth();
+  const {user} = useUser()
+
   const currency = import.meta.env.VITE_CURRENCY;
   const navigate = useNavigate();
   const [allCourses, setAllCourse] = useState([]);
-  const [isEducator, setisEducator] = useState(true);
+  const [isEducator, setisEducator] = useState(false);
   const [enrolledCourses, setEnrolledCourses] = useState([]);
+  const [userData , setUserData] = useState(null);
 
   // Fetch All Courses
   const fetchAllCourses = async () => {
-    setAllCourse(dummyCourses)
+    try{
+      const {data}=await axios.get(backendUrl +'/api/course/all')
+      if(data.success){
+        setAllCourse(data.courses)
+      }else{
+        toast.error(data.message)
+      }
+
+    }catch(error){
+      console.log(`Error come during fetching the data from backend: ${error.message}`);
+       toast.error(error.message)
+    }
+  }
+
+  // Fetch user data:
+  const fetchUserData = async()=>{
+    if(user.publicMetadata.role === 'educator'){
+      setisEducator(true);
+    }
+    try{
+      const token = await getToken();
+      const {data} = await axios.get(backendUrl+'/api/user/data' , {headers: {Authorization : `Bearer ${token}`}})
+      if(data.success){
+        setUserData(data.user);
+      }
+      else{
+        toast.error(data.message)
+      }
+
+    }catch(error){
+      toast.error(error.message)
+
+    }
   }
 
   // Function to calculate average rating of course
@@ -72,19 +113,10 @@ export function  AppContextProvider({ children }){
   }, [])
 
 
-  //! backend :
-  // token get from clerk:
-  const {getToken} = useAuth();
-  const {user} = useUser()
-
-  const logToken = async ()=>{
-    await getToken();
-    console.log(await getToken());
-  }
 
   useEffect(()=>{
     if(user) {
-      logToken()
+      fetchUserData()
     }
   },[user])
 
@@ -100,7 +132,8 @@ export function  AppContextProvider({ children }){
     calculateNoOfLecture,
     enrolledCourses,
     setEnrolledCourses,
-    fetchUserEnrolledCourses
+    fetchUserEnrolledCourses,
+    backendUrl, userData, setUserData, getToken, fetchAllCourses
   }
   return (
     <>
