@@ -13,9 +13,9 @@ export const getUserData = async (req , res)=>{
             return res.json({success: false , message: 'User not found'})
         }
 
-        req.status(200).json({success: true , user})
+        res.status(200).json({success: true , user})
     }catch(error){
-        req.status(500).json({success: false , message: error.message})
+        res.status(500).json({success: false , message: error.message})
 
     }
 
