@@ -48,10 +48,14 @@ export const purchaseCourse = async (req , res)=>{
         return res.json({success:false , message: 'Data Not Found'})
        }
 
+         const finalAmount =
+      courseData.coursePrice -
+      (courseData.discount * courseData.coursePrice) / 100;
+
        const purchaseData = {
         courseId: courseData._id,
         userId,
-        amount: (courseData.coursePrice - courseData.discount * courseData.coursePrice / 100).toFixed(2)
+       amount: Number(finalAmount.toFixed(2)),
        }
 
        const newPurchase = await Purchase.create(purchaseData)
@@ -74,7 +78,7 @@ export const purchaseCourse = async (req , res)=>{
     }]
 
     const session = await stripeInstance.checkout.sessions.create({
-        success_url: `${origin}/loading/my-enrollments`,
+        success_url: `${origin}/loading/my-enrollment`,
         cancel_url:`${origin}`,
         line_items: line_items,
         mode:'payment',
@@ -82,7 +86,7 @@ export const purchaseCourse = async (req , res)=>{
             purchaseId: newPurchase._id.toString()
         }
     })
-
+    
     res.json({success: true , session_url:session.url})
 
 

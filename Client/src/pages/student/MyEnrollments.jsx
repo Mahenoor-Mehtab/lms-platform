@@ -22,7 +22,7 @@ const MyEnrollments = () => {
     <div className='md:px-36 px-8 pt-10 mb-20'>
       <h1 className='text-2xl font-semibold '>My Enrollment</h1>
     <table className='md:table-auto table-fixed w-full overflow-hidden border mt-10'>
-    <thead className='text-gray-200 border-b border-gray-300 text-sm text-left max-sm:hidden'>
+    <thead className='text-gray-200 border-b border-gray-300 text-sm text-left '>
     <tr className=''>
       <th className='px-4 py-3 font-semibold truncate'> Course  </th>
        <th className='px-4 py-3 font-semibold truncate'> Duration  </th>
@@ -44,10 +44,10 @@ const MyEnrollments = () => {
 
             </div>
           </td>
-          <td className='px-4 py-3 max-sm:hidden'>
+          <td className='px-4 py-3 '>
 { calculateCourseDuration(course)}
           </td>
-          <td className='px-4 py-3 max-sm:hidden'>
+          <td className='px-4 py-3 '>
             {progressArray[index] && `${progressArray[index].lectureCompleted} / ${progressArray[index].totalLecture}` }<span> Lectures </span>
           </td>
           <td className='px-4 py-3 max-sm:text-right'>

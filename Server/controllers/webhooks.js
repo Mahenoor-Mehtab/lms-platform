@@ -37,7 +37,7 @@ export const clerkWebhooks = async (req , res)=>{
 
             case 'user.updated':{
                 const userData = {
-                    email:data.email_address[0].email_address,
+                    email:data.email_addresses[0].email_address,
                     name:data.first_name + " " + data.last_name,
                     imageUrl: data.image_url
                 }
@@ -66,7 +66,7 @@ export const clerkWebhooks = async (req , res)=>{
 }
 
 
-const stripeInstance = new Stripe(process.env.STRIPE_WEBHOOK_SECRET)
+const stripeInstance = new Stripe(process.env.STRIPE_SECRET_KEY)
 
 export const stripeWebhooks = async(request, response)=>{
    const sig = request.headers['stripe-signature'];
@@ -74,7 +74,7 @@ export const stripeWebhooks = async(request, response)=>{
   let event;
 
   try {
-    event = Stripe.webhooks.constructEvent(request.body, sig, process.env.STRIPE_WEBHOOK_SECRET );
+     event = stripeInstance.webhooks.constructEvent(request.body, sig, process.env.STRIPE_WEBHOOK_SECRET );
 
      // Handle the event
   switch (event.type) {
@@ -86,13 +86,13 @@ export const stripeWebhooks = async(request, response)=>{
         payment_intent: paymentIntentId
       })
 
-      const { purchasedId} = session.data[0].metadata;
+      const { purchaseId} = session.data[0].metadata;
 
-      const purchaseData = await Purchase.findById(purchasedId)
+      const purchaseData = await Purchase.findById(purchaseId)
       const userData = await User.findById(purchaseData.userId)
       const courseData = await Course.findById(purchaseData.courseId.toString())
 
-      courseData.enrolledStudents.push(userData)
+      courseData.enrolledStudents.push(userData._id)
       await courseData.save()
 
       userData.enrolledCourses.push(courseData._id)
@@ -111,6 +111,10 @@ export const stripeWebhooks = async(request, response)=>{
         payment_intent: paymentIntentId
       })
 
+       if (!session.data.length) {
+ console.log('No checkout session found')
+    break;
+ }
       const { purchaseId} = session.data[0].metadata
      const purchaseData = await Purchase.findById(purchaseId)
      purchaseData.status = 'failed'
@@ -130,6 +134,8 @@ export const stripeWebhooks = async(request, response)=>{
   }
   catch (err) {
     response.status(400).send(`Webhook Error: ${err.message}`);
+      console.log('Webhook logic error:', err.message)
+      response.status(200).json({ received: true });
   }
 }
 
