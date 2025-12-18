@@ -4,14 +4,40 @@ import { useClerk, UserButton, useUser } from "@clerk/clerk-react";
 import { useContext } from "react";
 import { AppContext } from "../../context/AppContext";
 import { motion } from "framer-motion";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 const Navbar = () => {
   const location = useLocation();
-  const { navigate, isEducator } = useContext(AppContext);
+  const { navigate, isEducator,backendUrl , setIsEducator , getToken  } = useContext(AppContext);
   const isCourseListPage = location.pathname.includes("/course-list");
 
   const { openSignIn } = useClerk();
   const { user } = useUser();
+
+  const becomeEducator = async()=>{
+    try{
+      if(isEducator){
+        navigate('/educator')
+        return;
+      }
+
+      const token = await getToken();
+      const {data}=  await axios.get(backendUrl + '/api/educator/update-role', {headers:{Authorization:`Bearer ${token}`}})
+     if(data.success){
+      setIsEducator(true);
+      toast.success(data.message)
+     }else{
+      toast.error(error.message)
+
+     }
+
+      
+    }catch(error){
+      toast.error(error.message)
+    }
+
+  }
 
   return (
     <>
@@ -48,7 +74,7 @@ const Navbar = () => {
                 <button
                   className="px-3 py-2 rounded-md text-slate-200 hover:text-white hover:underline hover:underline-offset-4 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-400/40"
                   aria-label="Educator or Become educator"
-                  onClick={()=> navigate('/educator')}
+                  onClick={becomeEducator}
                 >
                   {isEducator ? "Educator Dashboard" : "Become Educator"}
                 </button>

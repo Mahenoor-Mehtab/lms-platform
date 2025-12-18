@@ -24,6 +24,7 @@ export function  AppContextProvider({ children }){
 
   // Fetch All Courses
   const fetchAllCourses = async () => {
+     console.log( await getToken())
     try{
       const {data}=await axios.get(backendUrl +'/api/course/all')
       if(data.success){
@@ -68,7 +69,7 @@ export function  AppContextProvider({ children }){
     course.courseRatings.forEach(rating => {
       totalRating += rating.rating
     })
-    return totalRating / course.courseRatings.length
+    return Math.floor(totalRating / course.courseRatings.length)
   }
 
   // Function to Calculate Course Chapter Time
@@ -104,12 +105,25 @@ export function  AppContextProvider({ children }){
 
   // Fetch User Enrolled Courses:
   const fetchUserEnrolledCourses = async () => {
-    setEnrolledCourses(dummyCourses)
+  try{
+     const token = await getToken();
+   const { data } = await axios.get(backendUrl + '/api/user/enrolled-courses', {headers:{Authorization: `Bearer ${token}`}})
+
+   if(data.success){
+    setEnrolledCourses(data.enrolledCourses.reverse())
+   }
+   else{
+    toast.error(data.message)
+
+   }
+  }catch(error){
+       toast.error(error.message)
+  }
 
   }
+
   useEffect(() => {
     fetchAllCourses()
-    fetchUserEnrolledCourses()
   }, [])
 
 
@@ -117,6 +131,7 @@ export function  AppContextProvider({ children }){
   useEffect(()=>{
     if(user) {
       fetchUserData()
+      fetchUserEnrolledCourses()
     }
   },[user])
 
